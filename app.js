@@ -7,12 +7,13 @@ import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChang
 import { getFirestore, collection, doc, setDoc, addDoc, getDocs, query, orderBy, serverTimestamp, limit } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey: "PASTE_YOUR_FIREBASE_API_KEY",
-  authDomain: "PASTE_YOUR_PROJECT.firebaseapp.com",
-  projectId: "PASTE_YOUR_PROJECT_ID",
-  storageBucket: "PASTE_YOUR_PROJECT.appspot.com",
-  messagingSenderId: "PASTE_YOUR_SENDER_ID",
-  appId: "PASTE_YOUR_APP_ID"
+  apiKey: "AIzaSyBApw1zKU8-XaCNo2pe_R0IOdyHC5lb8mU",
+  authDomain: "mypaisa-3497c.firebaseapp.com",
+  projectId: "mypaisa-3497c",
+  storageBucket: "mypaisa-3497c.firebasestorage.app",
+  messagingSenderId: "119643118866",
+  appId: "1:119643118866:web:27120d415758ed3bc827cb",
+  measurementId: "G-4TQN44GG2R"
 };
 
 const configReady = !Object.values(firebaseConfig).some(v => v.startsWith("PASTE_"));
@@ -53,12 +54,15 @@ async function recordLogin(){
   await setDoc(userRef,{uid:currentUser.uid,name:currentUser.displayName||"MyPaisa user",email:currentUser.email||"",photoURL:currentUser.photoURL||"",lastLoginAt:serverTimestamp(),createdAt:serverTimestamp()},{merge:true});
   await addDoc(collection(db,"users",currentUser.uid,"loginEvents"),{at:serverTimestamp(),method:"google"});
 }
-async function checkAdmin(){
-  // Admin membership documents must be created manually in Firestore by the project owner.
-  // Document path: admins/{your Firebase Auth UID}. Never allow client-side admin self-registration.
-  const snap=await getDocs(query(collection(db,"admins")));
-  isAdmin=snap.docs.some(d=>d.id===currentUser.uid);
-  document.querySelector("#admin-link").classList.toggle("hidden",!isAdmin);
+async function checkAdmin() {
+  const adminRef = doc(db, "admins", currentUser.uid);
+  const snap = await getDoc(adminRef);
+
+  isAdmin = snap.exists();
+
+  document.querySelector("#admin-link")
+    .classList.toggle("hidden", !isAdmin);
+}
 }
 async function loadAdmin(){
   document.querySelector("#admin-denied").classList.toggle("hidden",isAdmin);
