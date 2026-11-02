@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#21151d">
+  <title>MyPaisa — Your Money. Your Control.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="auth-screen" class="auth-screen">
+    <div class="auth-card">
+      <div class="brand-mark">₹</div>
+      <p class="eyebrow">PERSONAL FINANCE, REIMAGINED</p>
+      <h1>My<span>Paisa</span></h1>
+      <p class="muted">Your money. Your control.</p>
+      <button id="google-signin" class="button button-gold">Continue with Google</button>
+      <p class="tiny muted">Your financial information is private to your account.</p>
+      <p id="auth-message" class="message"></p>
+    </div>
+  </div>
+
+  <div id="app" class="app hidden">
+    <aside class="sidebar">
+      <a class="brand" href="#"><span class="brand-mark small">₹</span><span>MyPaisa</span></a>
+      <p class="nav-label">WORKSPACE</p>
+      <button class="nav-item active" data-view="overview">▦ <span>Overview</span></button>
+      <button class="nav-item" data-view="transactions">↕ <span>Transactions</span></button>
+      <button class="nav-item" data-view="budgets">◷ <span>Budgets</span></button>
+      <button class="nav-item" data-view="savings">◇ <span>Savings goals</span></button>
+      <button class="nav-item" data-view="assistant">✧ <span>MyPaisa AI</span><i>SOON</i></button>
+      <div class="sidebar-bottom">
+        <div class="user-mini"><div id="user-avatar" class="avatar">U</div><div><strong id="user-name">User</strong><small id="user-email">Signed in</small></div></div>
+        <button id="signout" class="nav-item signout">↪ <span>Sign out</span></button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div><p class="eyebrow">YOUR FINANCIAL SPACE</p><h2 id="greeting">Welcome back</h2></div>
+        <div class="top-actions"><span class="date-pill" id="today"></span><a id="admin-link" class="admin-link hidden" href="#admin">Admin console ↗</a></div>
+      </header>
+
+      <section id="overview-view" class="view">
+        <div class="hero-row">
+          <div><p class="muted">Here's your financial snapshot</p><h1 class="page-title">Overview</h1></div>
+          <button id="add-expense-top" class="button button-gold">＋ Add transaction</button>
+        </div>
+        <div class="stats-grid">
+          <article class="stat-card"><span class="stat-label">TOTAL BALANCE</span><strong id="balance">₹0</strong><small class="muted">Income minus expenses</small></article>
+          <article class="stat-card"><span class="stat-label">TOTAL INCOME</span><strong id="income" class="positive">₹0</strong><small class="muted">Your recorded income</small></article>
+          <article class="stat-card"><span class="stat-label">TOTAL EXPENSES</span><strong id="expenses" class="negative">₹0</strong><small class="muted">Your recorded spending</small></article>
+        </div>
+        <div class="content-grid">
+          <article class="panel"><div class="panel-heading"><div><p class="eyebrow">ACTIVITY</p><h3>Recent transactions</h3></div><button class="text-button" data-goto="transactions">View all →</button></div><div id="recent-list" class="transaction-list"><p class="muted">No transactions yet. Add your first one.</p></div></article>
+          <article class="panel insight-panel"><p class="eyebrow">A GOOD HABIT</p><h3>Small steps add up.</h3><p class="muted">Record your income and spending regularly to understand where your money goes.</p><div class="gold-orb">₹</div></article>
+        </div>
+      </section>
+
+      <section id="transactions-view" class="view hidden">
+        <div class="hero-row"><div><p class="muted">Keep every rupee accounted for</p><h1 class="page-title">Transactions</h1></div><button id="add-expense" class="button button-gold">＋ Add transaction</button></div>
+        <article class="panel"><div id="all-list" class="transaction-list"><p class="muted">No transactions yet.</p></div></article>
+      </section>
+
+      <section id="budgets-view" class="view hidden">
+        <p class="eyebrow">PLAN AHEAD</p><h1 class="page-title">Budgets</h1>
+        <article class="panel"><h3>Budget planning is coming next</h3><p class="muted">We'll add monthly category budgets and spending alerts in the next development stage.</p></article>
+      </section>
+      <section id="savings-view" class="view hidden">
+        <p class="eyebrow">BUILD YOUR FUTURE</p><h1 class="page-title">Savings goals</h1>
+        <article class="panel"><h3>Savings goals are coming next</h3><p class="muted">Set a target, track your progress and celebrate each milestone.</p></article>
+      </section>
+      <section id="assistant-view" class="view hidden">
+        <p class="eyebrow">YOUR FINANCIAL COMPANION</p><h1 class="page-title">MyPaisa AI</h1>
+        <article class="panel"><h3>Your AI assistant is planned</h3><p class="muted">We'll connect the OpenAI API through a secure server function. Never put an AI API key in browser code.</p></article>
+      </section>
+
+      <section id="admin-view" class="view hidden">
+        <p class="eyebrow">RESTRICTED AREA</p><h1 class="page-title">Admin console</h1>
+        <div id="admin-denied" class="panel"><h3>Admin access required</h3><p class="muted">This account has not been granted administrator access.</p></div>
+        <div id="admin-content" class="hidden">
+          <div class="stats-grid">
+            <article class="stat-card"><span class="stat-label">REGISTERED USERS</span><strong id="admin-users">0</strong></article>
+            <article class="stat-card"><span class="stat-label">LOGIN EVENTS</span><strong id="admin-logins">0</strong></article>
+          </div>
+          <article class="panel"><div class="panel-heading"><h3>Registered users</h3></div><div id="admin-user-list" class="transaction-list"></div></article>
+          <p class="tiny muted">Only basic account details are shown. Private transactions and AI conversations are not part of this admin view.</p>
+        </div>
+      </section>
+      <footer>MyPaisa <span>•</span> Built with care</footer>
+    </main>
+  </div>
+
+  <dialog id="transaction-dialog" class="modal">
+    <form id="transaction-form">
+      <div class="panel-heading"><div><p class="eyebrow">RECORD MONEY MOVEMENT</p><h3>New transaction</h3></div><button type="button" id="close-dialog" class="icon-button">✕</button></div>
+      <label>Description<input id="description" maxlength="70" required placeholder="e.g. Lunch, salary"></label>
+      <div class="form-row">
+        <label>Amount (₹)<input id="amount" type="number" min="1" step="0.01" required placeholder="500"></label>
+        <label>Type<select id="type"><option value="expense">Expense</option><option value="income">Income</option></select></label>
+      </div>
+      <label>Category<select id="category"><option>Food</option><option>Travel</option><option>Shopping</option><option>Education</option><option>Bills</option><option>Health</option><option>Salary</option><option>Other</option></select></label>
+      <label>Date<input id="transaction-date" type="date" required></label>
+      <button class="button button-gold full-width" type="submit">Save transaction</button>
+      <p id="form-message" class="message"></p>
+    </form>
+  </dialog>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
