@@ -2,10 +2,9 @@
 // 1) Create a Firebase project and register a Web App.
 // 2) Paste your Firebase web config below. This config is not a password.
 // 3) Enable Google sign-in and create a Firestore database.
-import { initializeApp } from "firebase/app";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
-import { getFirestore, collection, doc, setDoc, addDoc, getDocs, query, orderBy, serverTimestamp, limit } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
-
+import { getFirestore, collection, doc, setDoc, addDoc, getDocs, getDoc, query, orderBy, serverTimestamp, limit } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 const firebaseConfig = {
   apiKey: "AIzaSyBApw1zKU8-XaCNo2pe_R0IOdyHC5lb8mU",
   authDomain: "mypaisa-3497c.firebaseapp.com",
@@ -62,7 +61,6 @@ async function checkAdmin() {
 
   document.querySelector("#admin-link")
     .classList.toggle("hidden", !isAdmin);
-}
 }
 async function loadAdmin(){
   document.querySelector("#admin-denied").classList.toggle("hidden",isAdmin);
