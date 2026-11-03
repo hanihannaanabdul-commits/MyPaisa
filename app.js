@@ -117,7 +117,7 @@ document.querySelector("#transaction-form").addEventListener("submit",async e=>{
   if(!Number.isFinite(amount)||amount<=0){showMessage(document.querySelector("#form-message"),"Enter a valid amount.");return;}
   const record={description:document.querySelector("#description").value.trim(),amount,type:document.querySelector("#type").value,category:document.querySelector("#category").value,date:document.querySelector("#transaction-date").value,createdAt:serverTimestamp()};
   try{await addDoc(collection(db,"users",currentUser.uid,"transactions"),record);await loadTransactions();dialog.close();}
-  catch(err){showMessage(document.querySelector("#form-message"),"Could not save. Check your Firebase rules.");console.error(err);}
+  catch(err){showMessage(document.querySelector("#form-message"),"Could not save. Check your Firebase rules.");console.error(err);}});
 document.querySelector("#reset-transactions")?.addEventListener("click", async () => {
   if (!currentUser) return;
 
