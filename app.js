@@ -4,7 +4,7 @@
 // 3) Enable Google sign-in and create a Firestore database.
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
-import { getFirestore, collection, doc, setDoc, addDoc, getDocs, getDoc, query, orderBy, serverTimestamp, limit } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+import { getFirestore, collection, doc, setDoc, addDoc, getDocs, getDoc, deleteDoc, query, orderBy, serverTimestamp, limit } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 const firebaseConfig = {
   apiKey: "AIzaSyBApw1zKU8-XaCNo2pe_R0IOdyHC5lb8mU",
   authDomain: "mypaisa-3497c.firebaseapp.com",
@@ -118,4 +118,30 @@ document.querySelector("#transaction-form").addEventListener("submit",async e=>{
   const record={description:document.querySelector("#description").value.trim(),amount,type:document.querySelector("#type").value,category:document.querySelector("#category").value,date:document.querySelector("#transaction-date").value,createdAt:serverTimestamp()};
   try{await addDoc(collection(db,"users",currentUser.uid,"transactions"),record);await loadTransactions();dialog.close();}
   catch(err){showMessage(document.querySelector("#form-message"),"Could not save. Check your Firebase rules.");console.error(err);}
+document.querySelector("#reset-transactions")?.addEventListener("click", async () => {
+  if (!currentUser) return;
+
+  const confirmed = confirm(
+    "Delete ALL your income and expense transactions? This cannot be undone."
+  );
+
+  if (!confirmed) return;
+
+  try {
+    const snapshot = await getDocs(
+      collection(db, "users", currentUser.uid, "transactions")
+    );
+
+    await Promise.all(
+      snapshot.docs.map(item => deleteDoc(item.ref))
+    );
+
+    transactions = [];
+    renderTransactions();
+
+    alert("All transactions have been reset to zero.");
+  } catch (error) {
+    console.error(error);
+    alert("Could not reset transactions. Please try again.");
+  }
 });
